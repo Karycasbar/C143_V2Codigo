@@ -1,0 +1,85 @@
+  getMovie = () => {
+    const url = this.state.ngrok_url + "/movies";
+    axios
+      .get(url)
+      .then((response) => {
+        this.setState({ 
+          movieDetails: response.data.data
+          });
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+----------------------------------------------------------------------
+    likedMovie = () => {
+    const url = this.state.ngrok_url + "/like";
+    axios
+      .get(url)
+      .then((response) => {
+        this.getMovie();
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+---------------------------------------------------------------------
+    dislikedMovie = () => {
+    const url = this.state.ngrok_url + "/dislike";
+    axios
+      .get(url)
+      .then((response) => {
+        this.getMovie();
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+-------------------------------------------------------------------
+    notWatched = () => {
+    const url = this.state.ngrok_url + "/did_not_watch";
+    axios
+      .get(url)
+      .then((response) => {
+        this.getMovie();
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+-----------------------------------------------------------------------------------------------------
+    const { movieDetails } = this.state;
+    if (movieDetails.poster_link) {
+      const { poster_link, original_title, release_date, duration, rating } = movieDetails;
+-----------------------------------------------------------------------------------------------------
+                  <Image
+                  style={styles.posterImage}
+                  source={{ uri: poster_link }}
+                />
+-------------------------------------------------------------------------
+                 <View style={styles.detailsContainer}>
+                  <Text style={styles.title}>{original_title}</Text>
+                  <Text style={styles.subtitle}>
+                    {release_date.split("-")[0]} | {duration} mins
+                  </Text>
+                </View>                  
+---------------------------------------------------------------------------------
+                  <TouchableOpacity onPress={this.likedMovie}>
+                  <Image
+                    style={styles.iconImage}
+                    source={require("../assets/like.png")}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.dislikedMovie}>
+                  <Image
+                    style={styles.iconImage}
+                    source={require("../assets/dislike.png")}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.notWatched}>
+                  <Image
+                    style={styles.iconImage}
+                    source={require("../assets/didNotWatch.png")}
+                  />
+                </TouchableOpacity>
+----------------------------------------------------------------------------------------------
